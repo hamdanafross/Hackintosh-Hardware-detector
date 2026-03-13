@@ -1,0 +1,68 @@
+{
+  "base": [
+    {
+      "id": "lilu",
+      "name": "Lilu",
+      "githubLatestZip": "https://github.com/acidanthera/Lilu/releases/latest/download/Lilu-RELEASE.zip",
+      "notes": "Core dependency for many kexts."
+    },
+    {
+      "id": "virtualsmc",
+      "name": "VirtualSMC",
+      "githubLatestZip": "https://github.com/acidanthera/VirtualSMC/releases/latest/download/VirtualSMC-RELEASE.zip",
+      "notes": "SMC emulator (required)."
+    }
+  ],
+  "graphics": [
+    {
+      "id": "whatevergreen",
+      "name": "WhateverGreen",
+      "githubLatestZip": "https://github.com/acidanthera/WhateverGreen/releases/latest/download/WhateverGreen-RELEASE.zip",
+      "notes": "Graphics support (Intel iGPU + AMD dGPU helpers)."
+    }
+  ],
+  "audio": [
+    {
+      "id": "applealc",
+      "name": "AppleALC",
+      "githubLatestZip": "https://github.com/acidanthera/AppleALC/releases/latest/download/AppleALC-RELEASE.zip",
+      "notes": "Audio support (requires layout-id tuning)."
+    }
+  ],
+  "ethernet": [
+    {
+      "id": "intelmausi",
+      "name": "IntelMausi",
+      "githubLatestZip": "https://github.com/acidanthera/IntelMausi/releases/latest/download/IntelMausi-RELEASE.zip",
+      "notes": "Intel Ethernet."
+    },
+    {
+      "id": "realtekrtl8111",
+      "name": "RealtekRTL8111",
+      "githubLatestZip": "https://github.com/Mieze/RTL8111_driver_for_OS_X/releases/latest/download/RealtekRTL8111-V2.4.2.zip",
+      "notes": "Realtek 8111/8168 family Ethernet (community kext)."
+    }
+  ],
+  "wifi_bt": [
+    {
+      "id": "airportitlwm",
+      "name": "AirportItlwm",
+      "githubLatestZip": "https://github.com/OpenIntelWireless/itlwm/releases/latest/download/AirportItlwm_v2.3.0_stable.zip",
+      "notes": "Intel Wi‑Fi for macOS; pick version matching your macOS release."
+    },
+    {
+      "id": "intelbluetoothfirmware",
+      "name": "IntelBluetoothFirmware",
+      "githubLatestZip": "https://github.com/OpenIntelWireless/IntelBluetoothFirmware/releases/latest/download/IntelBluetoothFirmware.zip",
+      "notes": "Intel Bluetooth firmware kexts."
+    }
+  ],
+  "storage": [
+    {
+      "id": "nvmefix",
+      "name": "NVMeFix",
+      "githubLatestZip": "https://github.com/acidanthera/NVMeFix/releases/latest/download/NVMeFix-RELEASE.zip",
+      "notes": "NVMe power management fixes (varies by system)."
+    }
+  ]
+}
