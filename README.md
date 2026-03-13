@@ -1,0 +1,1 @@
+# Hackintosh-Hardware-detector
