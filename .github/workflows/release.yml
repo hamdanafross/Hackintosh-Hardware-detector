@@ -1,0 +1,105 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            arch: x64
+          - os: windows-latest
+            arch: arm64
+          - os: macos-latest
+            arch: x64
+          - os: macos-latest
+            arch: arm64
+          - os: ubuntu-latest
+            arch: x64
+          - os: ubuntu-latest
+            arch: arm64
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          architecture: ${{ matrix.arch }}
+
+      - name: Install build deps
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyinstaller
+
+      - name: Build executable
+        run: |
+          pyinstaller --name hhd --onefile -m hhd.cli
+
+      - name: Bundle files
+        shell: bash
+        run: |
+          mkdir -p dist_bundle
+          cp kext.json dist_bundle/
+          if [[ "${{ runner.os }}" == "Windows" ]]; then
+            cp dist/hhd.exe dist_bundle/
+          else
+            cp dist/hhd dist_bundle/
+            chmod +x dist_bundle/hhd || true
+          fi
+
+      - name: Create archive (Python)
+        shell: bash
+        run: |
+          python - <<'PY'
+          import os, tarfile, zipfile
+          from pathlib import Path
+
+          os_name = os.environ["RUNNER_OS"]
+          arch = os.environ["ARCH"]
+          bundle = Path("dist_bundle")
+
+          base = f"Hackintosh-Hardware-detector-{os_name}-{arch}"
+          if os_name == "Windows":
+            out = Path(f"{base}.zip")
+            with zipfile.ZipFile(out, "w", compression=zipfile.ZIP_DEFLATED) as z:
+              for p in bundle.rglob("*"):
+                if p.is_file():
+                  z.write(p, p.relative_to(bundle).as_posix())
+          else:
+            out = Path(f"{base}.tar.gz")
+            with tarfile.open(out, "w:gz") as t:
+              for p in bundle.rglob("*"):
+                t.add(p, arcname=p.relative_to(bundle).as_posix())
+          print("Wrote", out)
+          PY
+        env:
+          ARCH: ${{ matrix.arch }}
+
+      - name: Generate SHA256
+        shell: bash
+        run: |
+          ls -1 Hackintosh-Hardware-detector-* || true
+          if command -v sha256sum >/dev/null 2>&1; then
+            sha256sum Hackintosh-Hardware-detector-* > SHA256SUMS-${{ runner.os }}-${{ matrix.arch }}.txt
+          else
+            shasum -a 256 Hackintosh-Hardware-detector-* > SHA256SUMS-${{ runner.os }}-${{ matrix.arch }}.txt
+          fi
+
+      - name: Upload to GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            Hackintosh-Hardware-detector-*
+            SHA256SUMS-*.txt
