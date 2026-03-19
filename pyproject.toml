@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hackintosh-hardware-detector"
+version = "0.1.0"
+description = "Cross-platform hardware detection + OpenCore kext suggestions"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "GPL-3.0-or-later" }
+authors = [{ name = "Hamdan Afross" }]
+dependencies = []
+
+[project.scripts]
+hhd = "hhd.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
