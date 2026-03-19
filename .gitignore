@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.pyo
+*.so
+.venv/
+venv/
+.env
+
+# Packaging / build
+build/
+dist/
+*.egg-info/
+*.spec
+
+# OS junk
+.DS_Store
+Thumbs.db
+
+# Tool outputs (your app)
+output/
+downloads/
