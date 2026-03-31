@@ -45,7 +45,7 @@ jobs:
 
       - name: Build executable
         run: |
-          pyinstaller --name hhd --onefile -m hhd.cli
+          pyinstaller --name hhd --onefile src/hhd/cli.py
 
       - name: Bundle files
         shell: bash
